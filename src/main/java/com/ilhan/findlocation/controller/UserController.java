@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
@@ -15,14 +17,26 @@ public class UserController {
     private final UserService userService;
     private final ModelMapper modelMapper;
 
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     public UserDtoResponse findById(@PathVariable Long id) throws Exception {
         User user = userService.findById(id).orElseThrow(() -> new Exception("User not found"));
         return modelMapper.map(user, UserDtoResponse.class);
     }
 
+    @GetMapping("/find/all")
+    public List<User> findAll() throws Exception {
+        return userService.findAll();
+    }
+
+
     @PostMapping("/create")
-    public UserDtoResponse save(@RequestBody UserDtoRequest userDto) {
+    public UserDtoResponse save(@RequestBody UserDtoRequest userDto) throws Exception {
         return modelMapper.map(userService.save(userDto), UserDtoResponse.class);
+    }
+
+    @DeleteMapping("/delete/all")
+    public String deleteAll() throws Exception {
+        this.userService.deleteAll();
+        return "All users was deleted";
     }
 }
