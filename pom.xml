@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.ilhan</groupId>
     <artifactId>find-location</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>find-location</name>
     <description>An Application Finding Someone&apos;s Location</description>
     <properties>
